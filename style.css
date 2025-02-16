@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 60%;
+}
+
+.roulette {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-top: 100px;
+}
+
+.wheel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        #008000 0deg 9.73deg,   /* 0 - verde */
+        #ff0000 9.73deg 19.46deg,  /* 32 - rojo */
+        #000000 19.46deg 29.19deg,  /* 15 - negro */
+        #ff0000 29.19deg 38.92deg,  /* 19 - rojo */
+        #000000 38.92deg 48.65deg,  /* 4 - negro */
+        #ff0000 48.65deg 58.38deg,  /* 21 - rojo */
+        #000000 58.38deg 68.11deg,  /* 2 - negro */
+        #ff0000 68.11deg 77.84deg,  /* 25 - rojo */
+        #000000 77.84deg 87.57deg,  /* 17 - negro */
+        #ff0000 87.57deg 97.30deg,  /* 34 - rojo */
+        #000000 97.30deg 107.03deg, /* 6 - negro */
+        #ff0000 107.03deg 116.76deg,/* 27 - rojo */
+        #000000 116.76deg 126.49deg,/* 13 - negro */
+        #ff0000 126.49deg 136.22deg,/* 36 - rojo */
+        #000000 136.22deg 146.95deg,/* 11 - negro */
+        #ff0000 146.95deg 156.68deg,/* 30 - rojo */
+        #000000 156.68deg 166.41deg,/* 8 - negro */
+        #ff0000 166.41deg 176.14deg,/* 23 - rojo */
+        #000000 176.14deg 185.87deg,/* 10 - negro */
+        #ff0000 185.87deg 195.60deg,/* 5 - rojo */
+        #000000 195.60deg 205.33deg,/* 24 - negro */
+        #ff0000 205.33deg 215.06deg,/* 16 - rojo */
+        #000000 215.06deg 224.79deg,/* 33 - negro */
+        #ff0000 224.79deg 234.52deg,/* 1 - rojo */
+        #000000 234.52deg 244.25deg,/* 20 - negro */
+        #ff0000 244.25deg 254.00deg,/* 14 - rojo */
+        #000000 254.00deg 263.73deg,/* 31 - negro */
+        #ff0000 263.73deg 273.46deg,/* 9 - rojo */
+        #000000 273.46deg 283.19deg,/* 22 - negro */
+        #ff0000 283.19deg 292.92deg,/* 18 - rojo */
+        #000000 292.92deg 302.65deg,/* 29 - negro */
+        #ff0000 302.65deg 312.38deg,/* 7 - rojo */
+        #000000 312.38deg 322.11deg,/* 28 - negro */
+        #ff0000 322.11deg 331.84deg,/* 12 - rojo */
+        #000000 331.84deg 341.57deg,/* 35 - negro */
+        #ff0000 341.57deg 351.30deg,/* 3 - rojo */
+        #000000 351.30deg 360deg  /* 26 - negro */
+    );
+    border: 10px solid #333;
+    position: relative;
+    transition: transform 4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Controla la rotación */
+
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Esta es la clase que será aplicada para iniciar el giro */
+.spin {
+    animation: spin 4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Controla el tiempo de la animación */
+}
+
+
+.numbers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.number {
+    position: absolute;
+    color: white; /* Los números serán blancos */
+    font-size: 12px;
+    font-weight: bold;
+    transform-origin: 50% 75%; /* Aseguramos que el número esté en el borde exterior */
+    text-align: center;
+    transform: rotate(0deg); /* Mantener los números rectos */
+    transition: all 0.5s ease; /* Suaviza el movimiento */
+}
+
+
+.green {
+    color: rgb(2, 34, 2);
+}
+
+.red {
+    color: rgb(153, 6, 6);
+}
+
+.black {
+    color: rgb(83, 81, 81);
+}
+
+.greent{
+    color: rgb(26, 255, 0);
+}
+
+.redt {
+    color: rgb(255, 0, 0);
+}
+
+.blackt {
+    color: rgb(0, 0, 0);
+}
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result-table {
+    text-align: center;
+    width: 30%;
+    margin-top: 50px;
+}
+
+.bettingTable {
+    margin-top: 20px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+td {
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ball {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 10; /* Aseguramos que la bolita esté encima de los números */
+    transform: translateX(-50%) translateY(-50%); /* Centrar la bolita */
+    pointer-events: none; /* Para que la bolita no interfiera con la interacción */
+    aanimation: ballBounce 4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Animación de rebote */
+}
+
+/* Animación de rebote de la bolita */
+@keyframes ballBounce {
+    0% {
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-50%) translateY(-60%) rotate(90deg);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-50%) rotate(180deg);
+    }
+    75% {
+        transform: translateX(-50%) translateY(-60%) rotate(270deg);
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) rotate(360deg);
+    }
+}

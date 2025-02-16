@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Casino</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="container">
+            <div class="roulette" id="roulette">
+                <div class="wheel" id="wheel">
+                    <div class="numbers" id="numbers"></div>
+                </div>
+            </div>
+            <button id="spinBtn">Girar Ruleta</button>
+            <p id="result">Resultado: </p>
+
+            <div class="bettingTable">
+                <table>
+                    <tr>
+                        <th>0</th> <!-- Aquí va el 0 en verde -->
+                        <th colspan="3">1st 12</th>
+                        <th colspan="3">2nd 12</th>
+                        <th colspan="3">3rd 12</th>
+                    </tr>
+                    <tr>
+                        <td class="greent">0</td>
+                        <td class="redt">1</td>
+                        <td class="blackt">2</td>
+                        <td class="redt">3</td>
+                        <td class="blackt">4</td>
+                        <td class="redt">5</td>
+                        <td class="blackt">6</td>
+                        <td class="redt">7</td>
+                        <td class="blackt">8</td>
+                        <td class="redt">9</td>
+                    </tr>
+                    <tr>
+                        <td class="blackt">10</td>
+                        <td class="redt">11</td>
+                        <td class="blackt">12</td>
+                        <td class="redt">13</td>
+                        <td class="blackt">14</td>
+                        <td class="redt">15</td>
+                        <td class="blackt">16</td>
+                        <td class="redt">17</td>
+                        <td class="blackt">18</td>
+                        <td class="redt">19</td>
+                    </tr>
+                    <tr>
+                        <td class="blackt">20</td>
+                        <td class="redt">21</td>
+                        <td class="blackt">22</td>
+                        <td class="redt">23</td>
+                        <td class="blackt">24</td>
+                        <td class="redt">25</td>
+                        <td class="blackt">26</td>
+                        <td class="redt">27</td>
+                        <td class="blackt">28</td>
+                        <td class="redt">29</td>
+                    </tr>
+                    <tr>
+                        <td class="blacktA">30</td>
+                        <td class="redt">31</td>
+                        <td class="blackt">32</td>
+                        <td class="redt">33</td>
+                        <td class="blackt">34</td>
+                        <td class="redt">35</td>
+                        <td class="blackt">36</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- Tabla de resultados a la derecha -->
+        <div class="result-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Últimos Números</th>
+                    </tr>
+                </thead>
+                <tbody id="resultList">
+                    <!-- Los números ganadores aparecerán aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="bettingTable">
+        <table>
+            <!-- La tabla de apuestas va aquí -->
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
