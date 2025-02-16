@@ -3,6 +3,13 @@ const wheel = document.querySelector('.wheel');
 const spinButton = document.getElementById('spinBtn');
 const resultText = document.getElementById('result');
 const resultList = document.getElementById('resultList');
+const betAmountColorInput = document.getElementById('betAmountColor');
+const betColorInput = document.getElementById('betColor');
+const betAmountNumberInput = document.getElementById('betAmountNumber');
+const betNumberInput = document.getElementById('betNumber');
+const balanceElement = document.getElementById('balance');
+
+let balance = 1000; // Monto inicial
 
 // Números de la ruleta y sus colores
 const numbers = [
@@ -51,14 +58,13 @@ numbers.forEach((num, index) => {
     numberElement.classList.add('number', num.color);
     numberElement.textContent = num.number;
 
-    // Colocamos los números en el borde de la ruleta usando rotación y ajustamos su alineación
-    const rotationAngle = (index * 360) / numbers.length; // 37 segmentos (incluyendo el 0)
-    numberElement.style.transform = `rotate(${rotationAngle}deg) translateX(13px) translateY(-120px)`; // Ajustamos la posición
+    const rotationAngle = (index * 360) / numbers.length;
+    numberElement.style.transform = `rotate(${rotationAngle}deg) translateX(13px) translateY(-120px)`;
 
     numbersContainer.appendChild(numberElement);
 });
 
-// Inicializamos la bolita, pero no la mostramos hasta que se gire la ruleta
+// Inicializamos la bolita
 let ball;
 
 spinButton.addEventListener('click', () => {
@@ -71,10 +77,7 @@ spinButton.addEventListener('click', () => {
     const randomIndex = Math.floor(Math.random() * numbers.length);
     const randomAngle = (randomIndex * 360) / numbers.length;
 
-    // Generamos un número de vueltas aleatorias para que la ruleta gire varias veces
     const extraTurns = Math.floor(Math.random() * 3) + 3;
-
-    // Calcular el ángulo final sumando las vueltas extra
     const totalRotation = (extraTurns * 360) + randomAngle;
 
     // Creamos la bolita (si no existe ya)
@@ -82,40 +85,84 @@ spinButton.addEventListener('click', () => {
     ball.classList.add('ball');
     wheel.appendChild(ball);
 
-    // Añadimos la clase 'spin' para activar la animación de rotación
+    // Activamos la animación de rotación
     wheel.classList.add('spin');
 
-    // Aplicamos la rotación a la ruleta
     wheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.8, 0.25, 1)';
-    wheel.style.transform = `rotate(${totalRotation}deg)`; // Rota la ruleta con el ángulo calculado
+    wheel.style.transform = `rotate(${totalRotation}deg)`; 
 
-    // Esperamos que la animación termine (en este caso 4s) y luego mostramos el número ganador
     setTimeout(() => {
         wheel.classList.remove('spin');
 
         // Posicionamos la bolita en la casilla correcta
         const ballPositionAngle = randomIndex * (360 / numbers.length);
-        const ballPositionX = 120 * Math.cos((ballPositionAngle - 90) * Math.PI / 180) - 25; // Cálculo de la posición en el eje X
-        const ballPositionY = 120 * Math.sin((ballPositionAngle - 90) * Math.PI / 180); // Cálculo de la posición en el eje Y
+        const ballPositionX = 120 * Math.cos((ballPositionAngle - 90) * Math.PI / 180) - 25;
+        const ballPositionY = 120 * Math.sin((ballPositionAngle - 90) * Math.PI / 180);
 
-        // Crear la bolita en la posición del número ganador
         ball.style.transform = `translateX(-50%) translateY(-50%) translate(${ballPositionX}px, ${ballPositionY}px)`;
 
-        // Mostrar el número ganador en el resultado
+        // Verificamos si el jugador ganó
         const winningNumber = numbers[randomIndex].number;
         const winningColor = numbers[randomIndex].color;
         resultText.textContent = `La ruleta ha caído en el número ${winningNumber} (${winningColor})`;
 
+        // Apostar por color y número
+        let betAmountColor = parseInt(betAmountColorInput.value) || 0;  // Si no hay apuesta por color, será 0
+        const betColor = betColorInput.value;
+        let betAmountNumber = parseInt(betAmountNumberInput.value) || 0; // Si no hay apuesta por número, será 0
+        const betNumber = parseInt(betNumberInput.value);
+
+        // Verificar que el jugador tiene suficiente saldo
+        if ((betAmountColor + betAmountNumber) > balance) {
+            alert('No tienes suficiente saldo para esta apuesta.');
+            return;
+        }
+
+        balance -= (betAmountColor + betAmountNumber); // Restar lo apostado
+        balanceElement.textContent = balance;
+
+        let winAmount = 0;
+
+        // Verificar si ganó por color
+        if (betColor === winningColor && betAmountColor > 0) {
+            winAmount += betAmountColor * 2; // Ganar el doble por color
+            alert(`¡Ganaste! La ruleta ha caído en el color ${winningColor}`);
+        }
+
+        // Verificar si ganó por número
+        if (betNumber === parseInt(winningNumber) && betAmountNumber > 0) {
+            winAmount += betAmountNumber * 35; // Ganar 35 veces la apuesta por número
+            alert(`¡Ganaste! La ruleta ha caído en el número ${winningNumber}`);
+        }
+
+        balance += winAmount; // Añadir ganancias al balance
+        balanceElement.textContent = balance;
+
         // Actualizar la tabla con el número y color
         const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td class="${winningColor}">${winningNumber}</td>
-        `;
-        resultList.appendChild(newRow); // Insertamos el nuevo número al principio de la tabla
+        newRow.innerHTML = `<td class="${winningColor}">${winningNumber}</td>`;
+        resultList.appendChild(newRow);
 
-        // Limitar la cantidad de números en la lista (opcional)
+        // Limitar la cantidad de números en la lista
         if (resultList.rows.length > 10) {
             resultList.deleteRow(resultList.rows.length - 1); // Eliminar la última fila si hay más de 10
         }
     }, 4000); // La duración de la animación de la ruleta
+});
+
+
+// Captura de apuestas desde la tabla
+const bettingTable = document.querySelector('.bettingTable table');
+
+bettingTable.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('numberCell')) {
+        const selectedColor = e.target.classList.contains('red') ? 'red' :
+            e.target.classList.contains('black') ? 'black' : 'green';
+        const selectedNumber = e.target.dataset.number;
+
+        betColorInput.value = selectedColor;
+        betNumberInput.value = selectedNumber;
+
+        alert(`Has apostado al número ${selectedNumber} de color ${selectedColor}`);
+    }
 });

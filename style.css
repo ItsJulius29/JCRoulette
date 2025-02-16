@@ -13,6 +13,7 @@ body {
     background-color: #f0f0f0;
     padding: 20px;
     flex-direction: column;
+    padding-top: 200px;
 }
 
 .flex-container {
@@ -138,17 +139,42 @@ body {
     color: rgb(83, 81, 81);
 }
 
-.greent{
-    color: rgb(26, 255, 0);
+.numberCell {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
 }
 
-.redt {
-    color: rgb(255, 0, 0);
+.numberCell.red {
+    background-color: red;
+    color: white;
 }
 
-.blackt {
-    color: rgb(0, 0, 0);
+.numberCell.black {
+    background-color: black;
+    color: white;
 }
+
+.numberCell.green {
+    background-color: green;
+    color: white;
+}
+
+.chip {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
 #result {
     margin-top: 20px;
     font-size: 18px;
@@ -158,7 +184,7 @@ body {
 .result-table {
     text-align: center;
     width: 30%;
-    margin-top: 50px;
+    margin-top: 200px;
 }
 
 .bettingTable {
